@@ -32,6 +32,8 @@ public class Box {
     @OneToMany(mappedBy = "box", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Item> items;
 
+
+
     public enum State {
         IDLE, LOADING, LOADED, DELIVERING, DELIVERED, RETURNING
     }

@@ -1,6 +1,6 @@
 package org.mosesidowu.boxdelivery.exception;
 
-import com.example.boxdelivery.dto.ApiResponse;
+import org.mosesidowu.boxdelivery.dtos.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

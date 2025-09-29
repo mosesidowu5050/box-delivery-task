@@ -1,9 +1,16 @@
 package org.mosesidowu.boxdelivery.dtos.response;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.mosesidowu.boxdelivery.data.model.Item;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class ItemResponse {
     private String name;
     private int weight;

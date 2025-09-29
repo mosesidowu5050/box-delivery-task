@@ -1,14 +1,20 @@
 package org.mosesidowu.boxdelivery.dtos.response;
 
-import lombok.Data;
+import lombok.*;
+
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoxResponse {
-    private Long id;
+
     private String txref;
     private int weightLimit;
     private int batteryCapacity;
     private String state;
     private Set<ItemResponse> items;
+
+
 }

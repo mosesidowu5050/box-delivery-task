@@ -91,7 +91,6 @@ public class BoxServiceImpl implements BoxService {
 
     public BoxResponse toResponse(Box box) {
         BoxResponse boxResponse = new BoxResponse();
-        boxResponse.setId(box.getId());
         boxResponse.setTxref(box.getTxref());
         boxResponse.setWeightLimit(box.getWeightLimit());
         boxResponse.setBatteryCapacity(box.getBatteryCapacity());
