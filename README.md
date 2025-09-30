@@ -42,6 +42,14 @@ To run all tests:
 ./mvnw test
 ```
 
+## Endpoints
+
+- `POST /api/boxes/create-box` – Create a new box
+- `POST /api/boxes/{id}/load-items` – Load items into a box
+- `GET /api/boxes/{id}/get-items` – Get loaded items for a box
+- `GET /api/boxes/get-available-items` – List boxes available for loading
+- `GET /api/boxes/{id}/battery-level` – Check battery level
+
 ## API Usage
 
 You can test the API endpoints using [Postman](https://www.postman.com/) or `curl`.
