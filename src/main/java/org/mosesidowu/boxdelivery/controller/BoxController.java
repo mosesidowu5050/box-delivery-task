@@ -7,6 +7,7 @@ import org.mosesidowu.boxdelivery.dtos.response.ApiResponse;
 import org.mosesidowu.boxdelivery.dtos.response.BoxResponse;
 import org.mosesidowu.boxdelivery.dtos.response.ItemResponse;
 import org.mosesidowu.boxdelivery.service.BoxService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -20,28 +21,41 @@ public class BoxController {
     private final BoxService boxService;
 
     @PostMapping("/create-box")
-    public ApiResponse<BoxResponse> createBox(@RequestBody BoxRequest req) {
-        return ApiResponse.success(boxService.createBox(req));
+    public ResponseEntity<?> createBox(@RequestBody BoxRequest boxRequest) {
+        return new ResponseEntity<>(new ApiResponse<>(
+                true, "Box created successfully",
+                boxService.createBox(boxRequest)), HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/load-items")
-    public ApiResponse<BoxResponse> loadBoxWithItems(@PathVariable Long id, @RequestBody List<ItemRequest> requests) {
-        return ApiResponse.success(boxService.loadBoxWithItems(id, requests));
+    public ResponseEntity<?> loadBoxWithItems(@PathVariable Long id, @RequestBody List<ItemRequest> requests) {
+        return new ResponseEntity<>(new ApiResponse<>(
+                true, "Items loaded successfully",
+                boxService.loadBoxWithItems(id, requests)), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/get-items")
-    public ApiResponse<List<ItemResponse>> getLoadedItems(@PathVariable Long id) {
-        return ApiResponse.success(boxService.checkLoadedItems(id));
+    public ResponseEntity<?> getLoadedItems(@PathVariable Long id) {
+        return new ResponseEntity<>(new ApiResponse<>(
+                true, "Loaded items retrieved successfully",
+                boxService.checkLoadedItems(id)), HttpStatus.OK
+        );
     }
 
-    @GetMapping("/get_available-items")
-    public ApiResponse<List<BoxResponse>> getAvailableBoxesForLoading() {
-        return ApiResponse.success(boxService.checkAvailableBoxesForLoading());
+    @GetMapping("/get-available-items")
+    public ResponseEntity<?> getAvailableBoxesForLoading() {
+        return new ResponseEntity<>(new ApiResponse<>(
+                true, "Available boxes retrieved",
+                boxService.checkAvailableBoxesForLoading()), HttpStatus.OK
+        );
     }
 
     @GetMapping("/{id}/battery-level")
-    public ApiResponse<?> getBatteryLevel(@PathVariable Long id) {
+    public ResponseEntity<?> getBatteryLevel(@PathVariable Long id) {
         int batteryLevel = boxService.checkBatteryLevel(id);
-        return ApiResponse.success(Map.of("batteryLevel", batteryLevel));
+        return new ResponseEntity<>(new ApiResponse<>(
+                true, "Battery level retrieved",
+                Map.of("batteryLevel", batteryLevel)), HttpStatus.OK
+        );
     }
 }
