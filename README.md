@@ -54,6 +54,19 @@ To run all tests:
 
 You can test the API endpoints using [Postman](https://www.postman.com/) or `curl`.
 
+Example: **Load create a box**
+
+```http
+POST http://localhost:8080/api/boxes/create-box
+Content-Type: application/json
+
+{
+  "txref": "BOX1234567890123456",
+  "weightLimit": 455,
+  "batteryCapacity": 100
+}
+```
+
 Example: **Load items into a box**
 
 ```http
