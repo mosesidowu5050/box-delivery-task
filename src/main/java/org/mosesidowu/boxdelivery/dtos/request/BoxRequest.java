@@ -1,14 +1,13 @@
 package org.mosesidowu.boxdelivery.dtos.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.mosesidowu.boxdelivery.data.model.Box;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class BoxRequest {
 
     public String txref;
