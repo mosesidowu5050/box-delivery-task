@@ -89,11 +89,11 @@ class BoxServiceImplTest {
     @DisplayName("Should return loaded items for a given box")
     void checkLoadedItems() {
         Box box = Box.builder().id(1L).txref("BOX_123").weightLimit(300).batteryCapacity(70).state(Box.State.IDLE).build();
-        Item item1 = Item.builder().id(1L).name("Item1").weight(100).code("C001").box(box).build();
-        Item item2 = Item.builder().id(2L).name("Item2").weight(150).code("C002").box(box).build();
+        Item firstItem = Item.builder().id(1L).name("Item1").weight(100).code("C001").box(box).build();
+        Item secondItem = Item.builder().id(2L).name("Item2").weight(150).code("C002").box(box).build();
 
         when(boxRepository.findById(1L)).thenReturn(Optional.of(box));
-        when(itemRepository.findByBox(box)).thenReturn(List.of(item1, item2));
+        when(itemRepository.findByBox(box)).thenReturn(List.of(firstItem, secondItem));
         var items = boxService.checkLoadedItems(1L);
 
         assertThat(items).hasSize(2);
@@ -132,12 +132,12 @@ class BoxServiceImplTest {
                 .items(new HashSet<>())
                 .build();
 
-        ItemRequest itemReq = ItemRequest.builder().name("Item1").weight(100).code("C001").build();
+        ItemRequest itemRequest = ItemRequest.builder().name("Item1").weight(100).code("C001").build();
         when(boxRepository.findById(1L)).thenReturn(Optional.of(box));
         when(itemRepository.save(any(Item.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(boxRepository.save(any(Box.class))).thenReturn(box);
 
-        BoxResponse response = boxService.loadBoxWithItems(1L, List.of(itemReq));
+        BoxResponse response = boxService.loadBoxWithItems(1L, List.of(itemRequest));
         assertThat(response.getItems()).hasSize(1);
         assertThat(response.getItems().iterator().next().getName()).isEqualTo("Item1");
         assertThat(response.getState()).isEqualTo("LOADING");
@@ -167,10 +167,10 @@ class BoxServiceImplTest {
                 .items(new HashSet<>())
                 .build();
 
-        ItemRequest itemReq = ItemRequest.builder().name("HeavyItem").weight(200).code("H001").build();
+        ItemRequest itemRequest = ItemRequest.builder().name("HeavyItem").weight(200).code("H001").build();
 
         when(boxRepository.findById(1L)).thenReturn(Optional.of(box));
-        assertThatThrownBy(() -> boxService.loadBoxWithItems(1L, List.of(itemReq)))
+        assertThatThrownBy(() -> boxService.loadBoxWithItems(1L, List.of(itemRequest)))
                 .isInstanceOf(BoxDeliveryException.class)
                 .hasMessageContaining("Items exceed box weight limit");
     }

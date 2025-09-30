@@ -33,7 +33,6 @@ public class Box {
     private Set<Item> items;
 
 
-
     public enum State {
         IDLE, LOADING, LOADED, DELIVERING, DELIVERED, RETURNING
     }
