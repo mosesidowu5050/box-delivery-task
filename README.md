@@ -62,7 +62,7 @@ Content-Type: application/json
 
 {
   "txref": "BOX1234567890123456",
-  "weightLimit": 455,
+  "weightLimit": 500,
   "batteryCapacity": 100
 }
 ```

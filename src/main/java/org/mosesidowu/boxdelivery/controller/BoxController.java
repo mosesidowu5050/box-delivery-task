@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.mosesidowu.boxdelivery.dtos.request.BoxRequest;
 import org.mosesidowu.boxdelivery.dtos.request.ItemRequest;
 import org.mosesidowu.boxdelivery.dtos.response.ApiResponse;
-import org.mosesidowu.boxdelivery.dtos.response.BoxResponse;
-import org.mosesidowu.boxdelivery.dtos.response.ItemResponse;
 import org.mosesidowu.boxdelivery.service.BoxService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
