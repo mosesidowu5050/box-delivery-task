@@ -18,4 +18,5 @@ public class GlobalExceptionHandler {
     public ApiResponse<?> handleGenericException(Exception ex) {
         return ApiResponse.error("An unexpected error occurred: " + ex.getMessage());
     }
+
 }

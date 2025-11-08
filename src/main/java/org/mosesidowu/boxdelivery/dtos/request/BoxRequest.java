@@ -13,5 +13,6 @@ public class BoxRequest {
     public String txref;
     public int weightLimit;
     public int batteryCapacity;
+    public String address;
 
 }

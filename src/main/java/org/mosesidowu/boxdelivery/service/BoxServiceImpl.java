@@ -1,6 +1,5 @@
 package org.mosesidowu.boxdelivery.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.mosesidowu.boxdelivery.data.model.Box;
 import org.mosesidowu.boxdelivery.data.model.Item;
@@ -11,6 +10,7 @@ import org.mosesidowu.boxdelivery.dtos.request.ItemRequest;
 import org.mosesidowu.boxdelivery.dtos.response.BoxResponse;
 import org.mosesidowu.boxdelivery.dtos.response.ItemResponse;
 import org.mosesidowu.boxdelivery.exception.BoxDeliveryException;
+import org.mosesidowu.geolocation_core.service.googleService.GoogleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +22,13 @@ import java.util.stream.Collectors;
 public class BoxServiceImpl implements BoxService {
     private final BoxRepository boxRepository;
     private final ItemRepository itemRepository;
+    private final GoogleService googleService;
+
 
     @Override
     public BoxResponse createBox(BoxRequest boxRequest) {
         if (boxRequest.getWeightLimit() > 500) throw new BoxDeliveryException("Weight limit cannot exceed 500g");
+        googleService.getCoordinates(boxRequest.address); // validate address
 
         Box box = Box.builder()
                 .txref(boxRequest.getTxref())
@@ -67,6 +70,7 @@ public class BoxServiceImpl implements BoxService {
 
         int currentWeight = box.getItems() == null ? 0 :
                 box.getItems().stream().mapToInt(Item::getWeight).sum();
+
         int incomingWeight = items.stream().mapToInt(ItemRequest::getWeight).sum();
         if (currentWeight + incomingWeight > box.getWeightLimit())
             throw new BoxDeliveryException("Items exceed box weight limit.");
@@ -96,7 +100,10 @@ public class BoxServiceImpl implements BoxService {
         boxResponse.setBatteryCapacity(box.getBatteryCapacity());
         boxResponse.setState(box.getState().name());
         if (box.getItems() != null)
-            boxResponse.setItems(box.getItems().stream().map(ItemResponse::fromEntity).collect(Collectors.toSet()));
+            boxResponse.setItems(box.getItems()
+                    .stream()
+                    .map(ItemResponse::fromEntity)
+                    .collect(Collectors.toSet()));
         return boxResponse;
     }
 }
